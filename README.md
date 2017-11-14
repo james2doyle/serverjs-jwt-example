@@ -1,7 +1,7 @@
 Server.js JWT Example
 =====================
 
-> An example on how to use Server.js with JWT authentication.
+> An example on how to use [Server.js](https://serverjs.io/) with JWT authentication.
 
 ## Quick Start
 
