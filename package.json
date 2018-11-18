@@ -22,12 +22,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "jsonwebtoken": "^8.1.0",
-    "server": "^1.0.4"
+    "jsonwebtoken": "^8.4.0",
+    "server": "^1.0.18"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint": "^5.9",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }

@@ -1,17 +1,24 @@
-const config = require('./config');
-const jwt = require('jsonwebtoken');
 const server = require('server');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 
-const { get, post } = server.router;
+const { get, post, error } = server.router;
 const {
-  render, redirect, json, status,
+  render, json, status,
 } = server.reply;
 
 const auth = async ctx => new Promise((resolve, reject) => {
   const token = ctx.headers.authorization || ctx.query.token;
+
+  if (!token) {
+    reject(new Error('Unauthorized'));
+
+    return;
+  }
+
   jwt.verify(token, config.jwtSecret, (err, decoded) => {
     ctx.user = (err || !decoded) ? null : decoded.user;
-    if (err) {
+    if (err || !decoded) {
       console.log(err);
       reject(err.message);
     }
@@ -23,8 +30,9 @@ const auth = async ctx => new Promise((resolve, reject) => {
 server(
   config.serverConfig,
   [
+    error(ctx => status(500).send(ctx.error.message)),
     // serve index.html from the public dir
-    get('/', ctx => render('public/index')),
+    get('/', () => render('public/index')),
     get('/protected', auth, async ctx => json({
       message: 'hello! thanks for the token',
       user: ctx.user, // stored in the token and pulled out in the auth middleware
